@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClInclude Include="TetrisEngine.h" />
+    <ClInclude Include="Deleters.h">
+      <Filter>Util</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="TetrisEngine.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Util">
+      <UniqueIdentifier>{3b558685-24e1-4061-bd69-7ad3c9862534}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
