@@ -27,6 +27,8 @@ namespace monthly
 		TetrisEngine(TetrisEngine&& other) = delete;
 		TetrisEngine& operator=(TetrisEngine&& rhs) = delete;
 
+		void Run();
+
 		static SDL_Window* GetWindow() { return m_pWindow.get(); }
 
 	private:

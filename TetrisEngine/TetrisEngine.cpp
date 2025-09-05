@@ -47,6 +47,15 @@ monthly::TetrisEngine::TetrisEngine(WindowSettings settings, Registry registry)
 	InitWindow(m_WindowSettings.windowTitle, (int)m_WindowSettings.width, (int)m_WindowSettings.height);
 }
 
+void monthly::TetrisEngine::Run()
+{
+	bool doContinue = true;
+	while (doContinue)
+	{
+		m_pRegistry->Update();
+	}
+}
+
 void monthly::TetrisEngine::InitWindow(const std::string& name, int width, int height, uint32_t flags)
 {
 	if (SDL_Init(SDL_INIT_VIDEO) != 0)

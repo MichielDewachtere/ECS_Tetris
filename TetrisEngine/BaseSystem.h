@@ -5,19 +5,22 @@
 
 //#include "EngineConcepts.h"
 
-//template <derived_from_component ...>
-class BaseSystem
+namespace monthly
 {
-public:
-	explicit BaseSystem(uint8_t orderIdx = 1);
-	virtual ~BaseSystem() = default;
+	//template <derived_from_component ...>
+	class BaseSystem
+	{
+	public:
+		explicit BaseSystem(uint8_t orderIdx = 1);
+		virtual ~BaseSystem() = default;
 
-	virtual void Update() = 0;
+		virtual void Update() = 0;
 
-	uint8_t GetOrderIndex() const { return m_OrderIdx; }
+		uint8_t GetOrderIndex() const { return m_OrderIdx; }
 
-private:
-	uint8_t m_OrderIdx = 1;
-};
+	private:
+		uint8_t m_OrderIdx = 1;
+	};
+}
 
 #endif // TETRISENGINE_BASESYSTEM_H

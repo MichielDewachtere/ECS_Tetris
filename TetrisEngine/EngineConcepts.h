@@ -6,11 +6,14 @@
 #include "BaseComponent.h"
 #include "BaseSystem.h"
 
-template <typename T>
-concept derived_from_component = std::is_base_of_v<BaseComponent, T>;
+namespace monthly
+{
+	template <typename T>
+	concept derived_from_component = std::is_base_of_v<BaseComponent, T>;
 
-template <typename T>
-concept derived_from_service = std::is_base_of_v<BaseSystem, T>;
+	template <typename T>
+	concept derived_from_service = std::is_base_of_v<BaseSystem, T>;
+}
 
 
 #endif // TETRISENGINE_ENGINECONCEPTS_H
