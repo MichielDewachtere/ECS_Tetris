@@ -35,14 +35,16 @@ namespace
 	}
 }
 
-monthly::TetrisEngine::TetrisEngine(WindowSettings settings)
+monthly::TetrisEngine::TetrisEngine(WindowSettings settings, Registry registry)
 {
 	m_WindowSettings = std::move(settings);
 	m_WindowSettings.frameTime = 1.f / static_cast<float>(m_WindowSettings.fps);
 
 	PrintSDLVersion();
 
-	InitWindow(m_WindowSettings.windowTitle, m_WindowSettings.width, m_WindowSettings.height);
+	m_pRegistry = std::make_unique<Registry>(std::move(registry));
+
+	InitWindow(m_WindowSettings.windowTitle, (int)m_WindowSettings.width, (int)m_WindowSettings.height);
 }
 
 void monthly::TetrisEngine::InitWindow(const std::string& name, int width, int height, uint32_t flags)

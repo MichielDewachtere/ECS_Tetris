@@ -5,6 +5,7 @@
 #include <string>
 
 #include "Deleters.h"
+#include "Registry.h"
 
 namespace monthly
 {
@@ -18,7 +19,7 @@ namespace monthly
 	class TetrisEngine final
 	{
 	public:
-		explicit TetrisEngine(WindowSettings settings);
+		explicit TetrisEngine(WindowSettings settings, Registry registry);
 		~TetrisEngine() = default;
 
 		TetrisEngine(const TetrisEngine& other) = delete;
@@ -31,6 +32,8 @@ namespace monthly
 	private:
 		static inline std::unique_ptr<SDL_Window, SDLDeleter> m_pWindow{ nullptr };
 		static inline WindowSettings m_WindowSettings{};
+
+		std::unique_ptr<Registry> m_pRegistry;
 
 		static void InitWindow(const std::string& name, int width, int height, uint32_t flags = 0);
 	};
