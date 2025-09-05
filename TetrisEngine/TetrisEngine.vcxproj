@@ -25,6 +25,7 @@
     <ClInclude Include="Deleters.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="Registry.h" />
+    <ClInclude Include="Singleton.h" />
     <ClInclude Include="TetrisEngine.h" />
   </ItemGroup>
   <ItemGroup>
