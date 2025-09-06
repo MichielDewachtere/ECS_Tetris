@@ -4,6 +4,9 @@
 #include <SDL_image.h>
 #include <stdexcept>
 
+#include "InputManager.h"
+#include "Renderer.h"
+
 namespace
 {
 	void PrintSDLVersion()
@@ -35,24 +38,31 @@ namespace
 	}
 }
 
-monthly::TetrisEngine::TetrisEngine(WindowSettings settings, Registry registry)
+monthly::TetrisEngine::TetrisEngine(WindowSettings settings, const Registry& registry)
 {
 	m_WindowSettings = std::move(settings);
 	m_WindowSettings.frameTime = 1.f / static_cast<float>(m_WindowSettings.fps);
 
 	PrintSDLVersion();
 
-	m_pRegistry = std::make_unique<Registry>(std::move(registry));
+	m_pRegistry = std::make_unique<Registry>(registry);
 
 	InitWindow(m_WindowSettings.windowTitle, (int)m_WindowSettings.width, (int)m_WindowSettings.height);
 }
 
 void monthly::TetrisEngine::Run()
 {
+	auto& input = InputManager::GetInstance();
+	auto& renderer = Renderer::GetInstance();
+	renderer.Init(m_pWindow.get(), *m_pRegistry);
+
 	bool doContinue = true;
 	while (doContinue)
 	{
+		doContinue = input.Update();
+
 		m_pRegistry->Update();
+		renderer.Render();
 	}
 }
 

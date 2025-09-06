@@ -3,4 +3,12 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Components">
+      <UniqueIdentifier>{cb84c600-7d78-4935-bb4d-918cd8e36edf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Systems">
+      <UniqueIdentifier>{e3e62c2c-4c77-472c-a9af-1df5c3df7fef}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
 </Project>

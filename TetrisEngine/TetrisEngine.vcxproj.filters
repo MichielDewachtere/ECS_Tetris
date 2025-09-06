@@ -6,44 +6,71 @@
       <Filter>Util</Filter>
     </ClInclude>
     <ClInclude Include="Entity.h">
-      <Filter>ECS</Filter>
+      <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="EngineConcepts.h">
       <Filter>Util</Filter>
     </ClInclude>
     <ClInclude Include="BaseComponent.h">
-      <Filter>ECS</Filter>
-    </ClInclude>
-    <ClInclude Include="BaseSystem.h">
-      <Filter>ECS</Filter>
-    </ClInclude>
-    <ClInclude Include="Registry.h">
-      <Filter>ECS</Filter>
+      <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="Singleton.h">
       <Filter>Util</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManager.h">
+      <Filter>Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer.h">
+      <Filter>Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseSystem.h">
+      <Filter>Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="Registry.h">
+      <Filter>Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphicsSystem.h">
+      <Filter>Systems</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TetrisEngine.cpp" />
     <ClCompile Include="Entity.cpp">
-      <Filter>ECS</Filter>
+      <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="BaseComponent.cpp">
-      <Filter>ECS</Filter>
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="InputManager.cpp">
+      <Filter>Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer.cpp">
+      <Filter>Renderer</Filter>
     </ClCompile>
     <ClCompile Include="BaseSystem.cpp">
-      <Filter>ECS</Filter>
+      <Filter>Systems</Filter>
     </ClCompile>
     <ClCompile Include="Registry.cpp">
-      <Filter>ECS</Filter>
+      <Filter>Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphicsSystem.cpp">
+      <Filter>Systems</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Util">
       <UniqueIdentifier>{3b558685-24e1-4061-bd69-7ad3c9862534}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ECS">
+    <Filter Include="Input">
+      <UniqueIdentifier>{c37239fe-87ed-49b6-ba8b-9f7d957d21e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Renderer">
+      <UniqueIdentifier>{16a50799-8357-4fe9-bb33-edb3259b722a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Systems">
+      <UniqueIdentifier>{247b7abb-0ac4-42c3-a1a7-611a07f877f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components">
       <UniqueIdentifier>{8362cd3c-d1fe-4f1f-b3b1-e09474f03cb7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>

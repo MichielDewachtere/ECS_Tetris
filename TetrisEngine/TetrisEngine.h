@@ -19,7 +19,7 @@ namespace monthly
 	class TetrisEngine final
 	{
 	public:
-		explicit TetrisEngine(WindowSettings settings, Registry registry);
+		explicit TetrisEngine(WindowSettings settings, const Registry& registry);
 		~TetrisEngine() = default;
 
 		TetrisEngine(const TetrisEngine& other) = delete;

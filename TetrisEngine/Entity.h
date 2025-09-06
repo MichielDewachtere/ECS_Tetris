@@ -10,13 +10,15 @@
 namespace monthly
 {
 	using entity_id = uint32_t;
-	
-	static inline entity_id g_currentEntityIdx = 0;
 
-	entity_id CreateNewEntity()
+	class Entity
 	{
-		return g_currentEntityIdx++;
-	}
+	public:
+		static entity_id CreateNewEntity();
+	private:
+
+		static entity_id m_CurrentEntityIdx;
+	};
 }
 
 #endif // TETRISENGINE_ENTITY_H

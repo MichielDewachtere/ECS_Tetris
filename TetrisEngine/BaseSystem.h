@@ -7,16 +7,21 @@
 
 namespace monthly
 {
+	class Registry;
+
 	//template <derived_from_component ...>
 	class BaseSystem
 	{
 	public:
-		explicit BaseSystem(uint8_t orderIdx = 1);
+		explicit BaseSystem(Registry& registry, uint8_t orderIdx = 1);
 		virtual ~BaseSystem() = default;
 
-		virtual void Update() = 0;
+		virtual void Update() {}
 
 		uint8_t GetOrderIndex() const { return m_OrderIdx; }
+
+	protected:
+		Registry* m_pRegistry;
 
 	private:
 		uint8_t m_OrderIdx = 1;

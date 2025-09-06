@@ -5,6 +5,7 @@
 
 #include "BaseComponent.h"
 #include "BaseSystem.h"
+#include "GraphicsSystem.h"
 
 namespace monthly
 {
@@ -12,7 +13,10 @@ namespace monthly
 	concept derived_from_component = std::is_base_of_v<BaseComponent, T>;
 
 	template <typename T>
-	concept derived_from_service = std::is_base_of_v<BaseSystem, T>;
+	concept derived_from_system = std::is_base_of_v<BaseSystem, T>;
+
+	template <typename T>
+	concept derived_from_graphics_service = std::is_base_of_v<GraphicsSystem, T>;
 }
 
 

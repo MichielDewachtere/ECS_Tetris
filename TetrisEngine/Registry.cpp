@@ -9,18 +9,27 @@ monthly::Registry::Registry()
 
 void monthly::Registry::Init()
 {
-	std::sort(m_Systems.begin(), m_Systems.end(), [](const BaseSystem& a, const BaseSystem& b) -> bool {return a.GetOrderIndex() < b.GetOrderIndex(); });
+	std::sort(m_Systems.begin(), m_Systems.end(), [](const BaseSystem* a, const BaseSystem* b) -> bool {return a->GetOrderIndex() < b->GetOrderIndex(); });
+	std::sort(m_GraphicsSystems.begin(), m_GraphicsSystems.end(), [](const GraphicsSystem* a, const GraphicsSystem* b) -> bool {return a->GetOrderIndex() < b->GetOrderIndex(); });
 }
 
 void monthly::Registry::Update()
 {
 	for (auto& system : m_Systems)
 	{
-		system.Update();
+		system->Update();
+	}
+
+	for (auto& system : m_GraphicsSystems)
+	{
+		system->Update();
 	}
 }
 
-void monthly::Registry::RegisterSystem(const BaseSystem& system)
+void monthly::Registry::Render()
 {
-	m_Systems.push_back(system);
+	for (auto& system : m_GraphicsSystems)
+	{
+		system->Render();
+	}
 }
