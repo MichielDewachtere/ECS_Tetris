@@ -15,7 +15,7 @@ namespace monthly
 		{
 			if (!m_Instance)
 			{
-				m_Instance = std::make_unique<T>();
+				m_Instance = new T();
 			}
 
 			return *m_Instance;
@@ -25,7 +25,7 @@ namespace monthly
 		Singleton() = default;
 
 	private:
-		static std::unique_ptr<T> m_Instance{ nullptr };
+		static inline T* m_Instance{ nullptr };
 	};
 }
 
