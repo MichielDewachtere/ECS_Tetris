@@ -2,13 +2,13 @@
 #define TETRISENGINE_REGISTRY_H
 
 
-#include <bitset>
-#include <memory>
+#include <algorithm>
 #include <typeindex>
 #include <unordered_map>
 #include <vector>
 #include <optional>
 
+#include "DynamicBitset.h"
 #include "GraphicsSystem.h"
 #include "EngineConcepts.h"
 #include "Entity.h"
@@ -27,8 +27,8 @@ namespace monthly
 		void Update();
 		void Render();
 
-		template<derived_from_component... TComponents>
-		entity_id RegisterEntity(TComponents&&... components);
+		template<derived_from_component... Ts>
+		entity_id RegisterEntity(Ts&&... components);
 
 		template<derived_from_component T>
 		void RegisterComponent();
@@ -55,28 +55,28 @@ namespace monthly
 		std::vector<GraphicsSystem*> m_GraphicsSystems{};
 
 		// Component Variables
-		std::vector<std::bitset<COMPONENT_AMOUNT>> m_ComponentMap{};
+		std::vector<DynamicBitset<>> m_ComponentMap{};
 		std::unordered_map<std::type_index, uint32_t> m_ComponentsToIndex{};
 
 		std::unordered_map<std::type_index, void*> m_SparseMaps{};
 		std::unordered_map<std::type_index, std::vector<entity_id>> m_DenseMaps{};
 
-		template<derived_from_component TComponent>
-		void StoreComponent(entity_id entity, TComponent&& component);
+		template<derived_from_component T>
+		void StoreComponent(entity_id entity, T&& component);
 
-		static inline entity_id m_CurrentComponentIdx = 0;
+		static inline entity_id m_CurrenTIdx = 0;
 	};
 
-	template <derived_from_component... TComponents>
-	entity_id Registry::RegisterEntity(TComponents&&... components)
+	template <derived_from_component... Ts>
+	entity_id Registry::RegisterEntity(Ts&&... components)
 	{
-		std::bitset<COMPONENT_AMOUNT> componentMap{};
+		DynamicBitset componentMap{ 32 };
 		m_ComponentMap.push_back(componentMap);
 
 		entity_id entity = Entity::CreateNewEntity();
 
-		(RegisterComponent<TComponents>(), ...);
-		(StoreComponent(entity, std::forward<TComponents>(components)), ...);
+		(RegisterComponent<Ts>(), ...);
+		(StoreComponent(entity, std::forward<Ts>(components)), ...);
 
 		return entity;
 	}
@@ -87,7 +87,7 @@ namespace monthly
 		auto& type = typeid(T);
 		if (!m_ComponentsToIndex.contains(type))
 		{
-			m_ComponentsToIndex[type] = m_CurrentComponentIdx++;
+			m_ComponentsToIndex[type] = m_CurrenTIdx++;
 
 			m_SparseMaps[type] = new std::vector<T>(ENTITY_AMOUNT);
 			m_DenseMaps[type] = std::vector<entity_id>();
@@ -122,7 +122,7 @@ namespace monthly
 			return;
 		}
 
-		bitset.set(m_ComponentsToIndex[type], true);
+		bitset.Set(m_ComponentsToIndex[type], true);
 		// TODO: Check if not already in map
 		m_DenseMaps[type].push_back(entity);
 		auto& sparseMap = *GetSparseMap<T>();
@@ -159,8 +159,9 @@ namespace monthly
 			return;
 		}
 
-		// TODO: Remove from dense set.
-		m_ComponentMap[entity].set(m_ComponentsToIndex[type], false);
+		m_ComponentMap[entity].Set(m_ComponentsToIndex[type], false);
+		auto denseArray = m_DenseMaps[type];
+		std::erase(denseArray, entity);
 	}
 
 	template <derived_from_component T>
@@ -189,16 +190,16 @@ namespace monthly
 		return nullptr;
 	}
 
-	template <derived_from_component TComponent>
-	void Registry::StoreComponent(entity_id entity,TComponent&& component)
+	template <derived_from_component T>
+	void Registry::StoreComponent(entity_id entity,T&& component)
 	{
-		auto& type = typeid(TComponent);
+		auto& type = typeid(T);
 
-		auto& components = *static_cast<std::vector<TComponent>*>(m_SparseMaps[type]);
-		components[entity] = std::forward<TComponent>(component);
+		auto& components = *static_cast<std::vector<T>*>(m_SparseMaps[type]);
+		components[entity] = std::forward<T>(component);
 		m_DenseMaps[type].push_back(entity);
 
-		m_ComponentMap[entity].set(m_ComponentsToIndex[type], true);
+		m_ComponentMap[entity].Set(m_ComponentsToIndex[type], true);
 	}
 }
 

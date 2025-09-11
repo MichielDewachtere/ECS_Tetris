@@ -32,6 +32,9 @@
     <ClInclude Include="GraphicsSystem.h">
       <Filter>Systems</Filter>
     </ClInclude>
+    <ClInclude Include="DynamicBitset.h">
+      <Filter>Util</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TetrisEngine.cpp" />
@@ -55,6 +58,9 @@
     </ClCompile>
     <ClCompile Include="GraphicsSystem.cpp">
       <Filter>Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="DynamicBitset.cpp">
+      <Filter>Util</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
