@@ -11,6 +11,8 @@ namespace monthly
 {
 	using entity_id = uint32_t;
 
+	static constexpr inline entity_id invalid_id = UINT32_MAX;
+
 	class Entity
 	{
 	public:
