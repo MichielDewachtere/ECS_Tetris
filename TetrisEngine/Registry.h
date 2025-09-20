@@ -29,10 +29,8 @@ namespace monthly
 
 		template<derived_from_component... Ts>
 		entity_id RegisterEntity(Ts&&... components);
-
 		template<derived_from_component T>
 		void RegisterComponent();
-
 		template<derived_from_system T>
 		void RegisterSystem(T* system);
 
@@ -42,6 +40,9 @@ namespace monthly
 		std::optional<T*> GetComponent(entity_id entity);
 		template<derived_from_component T>
 		void RemoveComponent(entity_id entity);
+
+		template<derived_from_system T>
+		std::optional<T*> GetSystem();
 
 		template<derived_from_component T>
 		std::vector<entity_id>* GetDenseMap();
@@ -162,6 +163,33 @@ namespace monthly
 		m_ComponentMap[entity].Set(m_ComponentsToIndex[type], false);
 		auto denseArray = m_DenseMaps[type];
 		std::erase(denseArray, entity);
+	}
+
+	template <derived_from_system T>
+	std::optional<T*> Registry::GetSystem()
+	{
+		if (std::is_base_of_v<GraphicsSystem, T>)
+		{
+			for (auto graphicsSystem : m_GraphicsSystems)
+			{
+				if (auto pSystem = dynamic_cast<T*>(graphicsSystem))
+				{
+					return pSystem;
+				}
+			}
+		}
+		else
+		{
+			for (auto system : m_Systems)
+			{
+				if (auto pSystem = dynamic_cast<T*>(system))
+				{
+					return pSystem;
+				}
+			}
+		}
+
+		return {};
 	}
 
 	template <derived_from_component T>
