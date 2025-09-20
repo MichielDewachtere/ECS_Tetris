@@ -1,107 +1,64 @@
 #include <iostream>
 
-#include "BaseSystem.h"
-#include "Renderer.h"
-#include "TetrisEngine.h"
+#include <TetrisEngine.h>
+#include <Registry.h>
 
-struct PositionComponent : monthly::BaseComponent
-{
-    float x, y;
-};
+#include "Components.h"
 
-struct ColorComponent : monthly::BaseComponent
-{
-    uint8_t r, g, b, a;
-};
-
-struct VelocityComponent : monthly::BaseComponent
-{
-    float x, y;
-};
-
-class DebugSystem : public monthly::GraphicsSystem
-{
-public:
-	DebugSystem(monthly::Registry& registry)
-		: GraphicsSystem(registry) {}
-
-    void Render() override
-    {
-        auto& pRenderer = monthly::Renderer::GetInstance();
-
-		std::vector<monthly::entity_id> colorComponents = *m_pRegistry->GetDenseMap<ColorComponent>();
-
-		for (auto idx : colorComponents)
-        {
-            auto result = m_pRegistry->GetComponent<PositionComponent>(idx);
-            if (!result.has_value())
-                continue;
-
-            auto posComp = result.value();
-        	auto colorComp = m_pRegistry->GetComponent<ColorComponent>(idx).value();
-            pRenderer.RenderRectangle({ posComp->x, posComp->y, 20,20 }, true, 
-                { colorComp->r, colorComp->g, colorComp->b,colorComp->a });
-        }
-    }
-};
-
-class MoveSystem : public monthly::BaseSystem
-{
-public:
-    MoveSystem(monthly::Registry& registry)
-		: BaseSystem(registry) {}
-
-	virtual void Update() override
-    {
-        std::vector<monthly::entity_id> velocityComponents = *m_pRegistry->GetDenseMap<VelocityComponent>();
-
-        for (auto idx : velocityComponents)
-        {
-            auto result = m_pRegistry->GetComponent<PositionComponent>(idx);
-            if (!result.has_value())
-                continue;
-
-            auto posComp = result.value();
-            auto velComp	= m_pRegistry->GetComponent<VelocityComponent>(idx).value();
-
-            posComp->x += velComp->x;
-            posComp->y += velComp->y;
-        }
-    }
-};
+#include "MoveSystem.h"
+#include "RenderSystem.h"
+#include "TransformSystem.h"
 
 int main()
 {
     monthly::WindowSettings settings{
-        .width = 512,
-        .height = 480,
+        .width = 528 * 2,
+        .height = 480 * 2,
         .fps = 60,
         .windowTitle = "ECS Tetris demo",
     };
 
 	auto registry = new monthly::Registry();
+    registry->RegisterComponent<EntityComponent>();
+    registry->RegisterComponent<GridComponent>();
     registry->RegisterComponent<PositionComponent>();
-    registry->RegisterComponent<VelocityComponent>();
-    registry->RegisterComponent<ColorComponent>();
+    registry->RegisterComponent<TetrominoComponent>();
+    registry->RegisterComponent<RotationComponent>();
 
-    registry->RegisterEntity(
-        PositionComponent{ .x = 100,.y = 100 }, 
-        ColorComponent{ .r = 255,.g = 0,.b = 0,.a = 255 }
+    monthly::entity_id grid = registry->RegisterEntity(
+        EntityComponent(),
+        PositionComponent(5, 3),
+        GridComponent{ .grid = std::vector(20, std::vector(10, false)) }
+        //GridComponent{ .grid = std::vector(20, std::vector<bool>{0,0,1,0,0,0,0,0,0,1}) }
     );
 
+	// 'L'
     registry->RegisterEntity(
-        PositionComponent{ .x = 100, .y = 200 },
-        ColorComponent{ .r = 0,.g = 255,.b = 0,.a = 255 }
+        EntityComponent{.parent = grid },
+        PositionComponent{ 9,3 },
+        TetrominoComponent{ .isControlled = true,
+            .shape = {
+            { 0, 1, 0 },
+            { 0, 1, 0 },
+            { 0, 1, 1 }}
+        }
     );
 
-    registry->RegisterEntity(
-        PositionComponent{ .x = 100, .y = 300 },
-        VelocityComponent{ .x = 0.001f, .y = 0.002f },
-        ColorComponent{ .r = 0,.g = 0,.b = 255,.a = 255 }
-    );
+    // '-'
+    //registry->RegisterEntity(
+    //    PositionComponent{ .globalX = 4, .globalY = -1 },
+    //    TetrominoComponent{ .isControlled = true,
+    //        .shape = {
+    //        { 0, 1, 0, 0, 0 },
+    //        { 0, 1, 0, 0, 0 },
+    //        { 0, 1, 0, 0, 0 },
+    //        { 0, 1, 0, 0, 0 }}
+    //    }
+    //);
 
-    registry->RegisterSystem<DebugSystem>(new DebugSystem(*registry));
+    registry->RegisterSystem<TransformSystem>(new TransformSystem(*registry));
     registry->RegisterSystem<MoveSystem>(new MoveSystem(*registry));
+    registry->RegisterSystem<RenderSystem>(new RenderSystem(*registry));
 
 #ifndef NDEBUG
     monthly::TetrisEngine engine(settings, *registry);
