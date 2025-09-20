@@ -35,6 +35,15 @@
     <ClInclude Include="DynamicBitset.h">
       <Filter>Util</Filter>
     </ClInclude>
+    <ClInclude Include="GameTime.h">
+      <Filter>Util</Filter>
+    </ClInclude>
+    <ClInclude Include="Observer.h">
+      <Filter>Observer</Filter>
+    </ClInclude>
+    <ClInclude Include="Subject.h">
+      <Filter>Observer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TetrisEngine.cpp" />
@@ -62,6 +71,15 @@
     <ClCompile Include="DynamicBitset.cpp">
       <Filter>Util</Filter>
     </ClCompile>
+    <ClCompile Include="GameTime.cpp">
+      <Filter>Util</Filter>
+    </ClCompile>
+    <ClCompile Include="Observer.cpp">
+      <Filter>Observer</Filter>
+    </ClCompile>
+    <ClCompile Include="Subject.cpp">
+      <Filter>Observer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Util">
@@ -78,6 +96,9 @@
     </Filter>
     <Filter Include="Components">
       <UniqueIdentifier>{8362cd3c-d1fe-4f1f-b3b1-e09474f03cb7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Observer">
+      <UniqueIdentifier>{26ca2ebc-e4d0-4c23-95a0-684c7496fe85}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

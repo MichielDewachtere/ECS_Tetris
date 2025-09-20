@@ -25,11 +25,14 @@
     <ClInclude Include="EngineConcepts.h" />
     <ClInclude Include="Deleters.h" />
     <ClInclude Include="Entity.h" />
+    <ClInclude Include="GameTime.h" />
     <ClInclude Include="GraphicsSystem.h" />
     <ClInclude Include="InputManager.h" />
+    <ClInclude Include="Observer.h" />
     <ClInclude Include="Registry.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="Singleton.h" />
+    <ClInclude Include="Subject.h" />
     <ClInclude Include="TetrisEngine.h" />
   </ItemGroup>
   <ItemGroup>
@@ -37,10 +40,13 @@
     <ClCompile Include="BaseSystem.cpp" />
     <ClCompile Include="DynamicBitset.cpp" />
     <ClCompile Include="Entity.cpp" />
+    <ClCompile Include="GameTime.cpp" />
     <ClCompile Include="GraphicsSystem.cpp" />
     <ClCompile Include="InputManager.cpp" />
+    <ClCompile Include="Observer.cpp" />
     <ClCompile Include="Registry.cpp" />
     <ClCompile Include="Renderer.cpp" />
+    <ClCompile Include="Subject.cpp" />
     <ClCompile Include="TetrisEngine.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

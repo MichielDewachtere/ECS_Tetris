@@ -4,6 +4,7 @@
 #include <SDL_image.h>
 #include <stdexcept>
 
+#include "GameTime.h"
 #include "InputManager.h"
 #include "Renderer.h"
 
@@ -56,6 +57,9 @@ void monthly::TetrisEngine::Run()
 	auto& renderer = Renderer::GetInstance();
 	renderer.Init(m_pWindow.get(), *m_pRegistry);
 
+	auto& time = GameTime::GetInstance();
+	time.Init();
+
 	bool doContinue = true;
 	while (doContinue)
 	{
@@ -63,6 +67,8 @@ void monthly::TetrisEngine::Run()
 
 		m_pRegistry->Update();
 		renderer.Render();
+
+		time.Update();
 	}
 }
 
