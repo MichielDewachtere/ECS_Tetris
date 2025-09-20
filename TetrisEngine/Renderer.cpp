@@ -28,6 +28,7 @@ void monthly::Renderer::Init(SDL_Window* pWindow, Registry& pRegistry)
 	}
 
 	m_pRegistry = &pRegistry;
+	SDL_GetRendererOutputSize(m_pRenderer.get(), &m_RenderWidth, &m_RenderHeight);
 }
 
 void monthly::Renderer::Render() const
@@ -52,6 +53,19 @@ void monthly::Renderer::RenderRectangle(const glm::ivec4& rect, bool isFilled, g
 		SDL_RenderFillRect(m_pRenderer.get(), &sdlRect);
 	else
 		SDL_RenderDrawRect(m_pRenderer.get(), &sdlRect);
+
+	SDL_SetRenderDrawColor(m_pRenderer.get(), originalColor.r, originalColor.g, originalColor.b, originalColor.a);
+	SDL_SetRenderTarget(m_pRenderer.get(), nullptr);
+}
+
+void monthly::Renderer::RenderLine(int x1, int y1, int x2, int y2, glm::u8vec4 color) const
+{
+	SDL_Color originalColor;
+	SDL_GetRenderDrawColor(m_pRenderer.get(), &originalColor.r, &originalColor.g, &originalColor.b, &originalColor.a);
+
+	SDL_SetRenderDrawColor(m_pRenderer.get(), color.r, color.g, color.b, color.a);
+
+	SDL_RenderDrawLine(m_pRenderer.get(), x1, y1, x2, y2);
 
 	SDL_SetRenderDrawColor(m_pRenderer.get(), originalColor.r, originalColor.g, originalColor.b, originalColor.a);
 	SDL_SetRenderTarget(m_pRenderer.get(), nullptr);
