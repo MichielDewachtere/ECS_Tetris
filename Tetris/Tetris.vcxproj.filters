@@ -14,6 +14,12 @@
     <ClCompile Include="GridSystem.cpp">
       <Filter>Systems</Filter>
     </ClCompile>
+    <ClCompile Include="TetrominoSystem.cpp">
+      <Filter>Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="RotateSystem.cpp">
+      <Filter>Systems</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Components">
@@ -37,6 +43,12 @@
       <Filter>Systems</Filter>
     </ClInclude>
     <ClInclude Include="GridSystem.h">
+      <Filter>Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="TetrominoSystem.h">
+      <Filter>Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="RotateSystem.h">
       <Filter>Systems</Filter>
     </ClInclude>
   </ItemGroup>

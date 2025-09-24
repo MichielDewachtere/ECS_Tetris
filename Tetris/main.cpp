@@ -4,9 +4,12 @@
 #include <Registry.h>
 
 #include "Components.h"
+#include "GridSystem.h"
 
 #include "MoveSystem.h"
 #include "RenderSystem.h"
+#include "RotateSystem.h"
+#include "TetrominoSystem.h"
 #include "TransformSystem.h"
 
 int main()
@@ -27,37 +30,33 @@ int main()
 
     monthly::entity_id grid = registry->RegisterEntity(
         EntityComponent(),
-        PositionComponent(5, 3),
-        GridComponent{ .grid = std::vector(20, std::vector(10, false)) }
-        //GridComponent{ .grid = std::vector(20, std::vector<bool>{0,0,1,0,0,0,0,0,0,1}) }
+        PositionComponent(5, -1),
+        GridComponent{ .grid = std::vector(24, std::vector(10, glm::u8vec4{})) }
     );
 
-	// 'L'
-    registry->RegisterEntity(
+    monthly::entity_id activeTetromino = registry->RegisterEntity(
         EntityComponent{.parent = grid },
-        PositionComponent{ 9,3 },
+        PositionComponent(5, 3),
         TetrominoComponent{ .isControlled = true,
-            .shape = {
-            { 0, 1, 0 },
-            { 0, 1, 0 },
-            { 0, 1, 1 }}
+            .shape = {}
         }
     );
 
-    // '-'
-    //registry->RegisterEntity(
-    //    PositionComponent{ .globalX = 4, .globalY = -1 },
-    //    TetrominoComponent{ .isControlled = true,
-    //        .shape = {
-    //        { 0, 1, 0, 0, 0 },
-    //        { 0, 1, 0, 0, 0 },
-    //        { 0, 1, 0, 0, 0 },
-    //        { 0, 1, 0, 0, 0 }}
-    //    }
-    //);
+    registry->RegisterEntity(
+        EntityComponent{ .parent = grid },
+        PositionComponent( 16,10 ),
+        TetrominoComponent{ .isControlled = false,
+            .shape = {}
+        }
+    );
 
-    registry->RegisterSystem<TransformSystem>(new TransformSystem(*registry));
-    registry->RegisterSystem<MoveSystem>(new MoveSystem(*registry));
+	registry->RegisterSystem<TransformSystem>(new TransformSystem(*registry));
+
+	registry->RegisterSystem<MoveSystem>(new MoveSystem(*registry));
+	registry->RegisterSystem<RotateSystem>(new RotateSystem(*registry, activeTetromino, grid));
+    registry->RegisterSystem<TetrominoSystem>(new TetrominoSystem(*registry));
+    registry->RegisterSystem<GridSystem>(new GridSystem(*registry, grid));
+
     registry->RegisterSystem<RenderSystem>(new RenderSystem(*registry));
 
 #ifndef NDEBUG

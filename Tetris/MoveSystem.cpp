@@ -99,7 +99,7 @@ void MoveSystem::MoveHorizontal(bool left) const
 				posToCheck = futurePos - (startCol - col);
 			}
 
-			if (m_pGridComponent->grid[m_pActivePositionComponent->GetLocalY() + row][posToCheck] == 1)
+			if (m_pGridComponent->grid[m_pActivePositionComponent->GetLocalY() + row][posToCheck].a)
 				return;
 		}
 	}
@@ -146,6 +146,11 @@ bool MoveSystem::MoveDownHelper(int& yOffset) const
 			{
 				return false;
 			}
+
+			if (m_pGridComponent->grid[yPos + 1][m_pActivePositionComponent->GetLocalX() + col].a)
+			{
+				return false;
+			}
 		}
 	}
 
@@ -179,8 +184,8 @@ bool MoveSystem::GetNewActiveTetromino()
 
 void MoveSystem::ShapeLockedIn(int yOffset) const
 {
-	const int x = m_pActivePositionComponent->GetGlobalX();
-	const int y = m_pActivePositionComponent->GetGlobalY() + yOffset;
+	const int x = m_pActivePositionComponent->GetLocalX();
+	const int y = m_pActivePositionComponent->GetLocalY() + yOffset;
 	tetrominoLockedIn.Notify(glm::ivec2{ x,y }, m_pActiveTetromino);
 
 	//m_pActivePositionComponent = nullptr;

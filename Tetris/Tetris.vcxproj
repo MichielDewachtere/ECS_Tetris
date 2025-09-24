@@ -199,6 +199,8 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPat
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MoveSystem.cpp" />
     <ClCompile Include="RenderSystem.cpp" />
+    <ClCompile Include="RotateSystem.cpp" />
+    <ClCompile Include="TetrominoSystem.cpp" />
     <ClCompile Include="TransformSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -206,6 +208,8 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPat
     <ClInclude Include="GridSystem.h" />
     <ClInclude Include="MoveSystem.h" />
     <ClInclude Include="RenderSystem.h" />
+    <ClInclude Include="RotateSystem.h" />
+    <ClInclude Include="TetrominoSystem.h" />
     <ClInclude Include="TransformSystem.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

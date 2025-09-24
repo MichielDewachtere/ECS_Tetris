@@ -16,7 +16,7 @@ public:
 
 	void Update() override;
 
-	monthly::Subject<const glm::ivec2, TetrominoComponent*> tetrominoLockedIn;
+	monthly::Subject<const glm::ivec2&, TetrominoComponent*> tetrominoLockedIn;
 
 private:
 	GridComponent* m_pGridComponent{ nullptr };
@@ -29,7 +29,7 @@ private:
 	void Move();
 	void MoveHorizontal(bool left) const;
 	void MoveDown(bool drop) const;
-	bool MoveDownHelper(int& yPosOffset) const;
+	bool MoveDownHelper(int& yOffset) const;
 
 	bool GetNewActiveTetromino();
 

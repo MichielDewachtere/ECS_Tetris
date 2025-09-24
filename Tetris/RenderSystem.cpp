@@ -62,7 +62,7 @@ void RenderSystem::RenderPlayField(const monthly::Renderer& renderer)
 	{
 		for (size_t j = 0; j < m_pGridComponent->grid.front().size(); ++j)
 		{
-			if (grid[i][j])
+			if (grid[i][j].a)
 			{
 				renderer.RenderRectangle(
 					{
@@ -71,7 +71,7 @@ void RenderSystem::RenderPlayField(const monthly::Renderer& renderer)
 						cell_size,
 						cell_size },
 						true,
-					{ 0,255,255,255 }
+					grid[i][j]
 					);
 			}
 		}
@@ -98,7 +98,7 @@ void RenderSystem::RenderTetrominos(const monthly::Renderer& renderer)
 							cell_size,
 							cell_size },
 							true,
-						{ 255,0,255,255 }
+						tetromino->color
 						);
 				}
 			}

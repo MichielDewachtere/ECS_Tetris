@@ -29,7 +29,7 @@ namespace monthly
 		std::vector<Observer<Args ...>*> GetObservers() const { return m_pObservers; }
 
 	private:
-		std::vector<Observer<Args ...>*> m_pObservers;
+		mutable std::vector<Observer<Args ...>*> m_pObservers;
 	};
 
 	template<typename ...Args>
