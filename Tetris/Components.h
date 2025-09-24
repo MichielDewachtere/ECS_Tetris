@@ -2,6 +2,7 @@
 #define TETRIS_COMPONENTS_H
 
 #include <vector>
+#include <glm/ext/vector_uint4_sized.hpp>
 
 #include "BaseComponent.h"
 #include "Entity.h"
@@ -24,6 +25,9 @@ struct PositionComponent : monthly::BaseComponent
 	int GetLocalX() const { return localX; }
 	int GetLocalY() const { return localY; }
 
+	void IncrementGlobalX(int incr) { globalX += incr; }
+	void IncrementGlobalY(int incr) { globalY += incr; }
+
 private:
 	friend class TransformSystem;
 	int globalX, globalY;
@@ -35,6 +39,7 @@ struct TetrominoComponent : monthly::BaseComponent
 {
 	bool isControlled;
 	std::vector<std::vector<bool>> shape;
+	glm::u8vec4 color;
 };
 
 struct RotationComponent : monthly::BaseComponent
@@ -44,8 +49,7 @@ struct RotationComponent : monthly::BaseComponent
 
 struct GridComponent : monthly::BaseComponent
 {
-	std::vector<std::vector<bool>> grid;
-
+	std::vector<std::vector<glm::u8vec4>> grid;
 };
 
 #endif // TETRIS_COMPONENTS_H
